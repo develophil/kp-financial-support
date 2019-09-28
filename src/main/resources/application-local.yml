@@ -1,0 +1,29 @@
+logging:
+  level:
+    ROOT: DEBUG
+    com.kakaopay.hkp: DEBUG
+
+server:
+  port: 8080
+
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:h2:mem:lgs;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: hkp
+    password:
+    hikari:
+      poolName: Hikari
+      auto-commit: false
+  jpa:
+    database: H2
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+  h2:
+    console:
+      enabled: true
+      path : /h2-console
+  devtools:
+    livereload:
+      enabled: true
