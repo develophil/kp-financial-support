@@ -9,7 +9,7 @@ public class ApiException extends RuntimeException {
 
     private String exceptionCode;
 
-    public ApiException(ExceptionCode exceptionCode, String... args) {
+    public ApiException(ExceptionCode exceptionCode, Object... args) {
         super(exceptionCode.getMessage(args));
         this.exceptionCode = exceptionCode.getCode();
     }
