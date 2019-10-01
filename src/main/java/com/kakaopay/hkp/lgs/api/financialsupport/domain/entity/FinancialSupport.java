@@ -1,9 +1,12 @@
 package com.kakaopay.hkp.lgs.api.financialsupport.domain.entity;
 
 import com.kakaopay.hkp.lgs.api.financialsupport.domain.dto.FinancialSupportCsv;
+import com.kakaopay.hkp.lgs.api.financialsupport.domain.dto.response.FinancialSupportDto;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Entity
 @Table(name = "financial_support")
@@ -70,5 +73,20 @@ public class FinancialSupport extends AbstractAuditingEntity {
         this.supportTarget = bean.getTarget();
         this.usage = bean.getUsage();
 
+    }
+
+    public FinancialSupport modify(FinancialSupportDto modifying) {
+
+        Optional.ofNullable(modifying.getRegion()).ifPresent((v) -> this.localGovernment = new LocalGovernment(id, v));
+        Optional.ofNullable(modifying.getRate()).ifPresent((v) -> this.interestDifferenceSupportRatio = v);
+        Optional.ofNullable(modifying.getMgmt()).ifPresent((v) -> this.managementBranch = v);
+        Optional.ofNullable(modifying.getReception()).ifPresent((v) -> this.receptionBranch = v);
+        Optional.ofNullable(modifying.getInstitute()).ifPresent((v) -> this.referrelInstitute = v);
+        Optional.ofNullable(modifying.getLimit()).ifPresent((v) -> this.supportLimitAmount = v);
+        Optional.ofNullable(modifying.getTarget()).ifPresent((v) -> this.supportTarget = v);
+        Optional.ofNullable(modifying.getUsage()).ifPresent((v) -> this.usage = v);
+        this.updateDateTime = LocalDateTime.now();
+
+        return this;
     }
 }

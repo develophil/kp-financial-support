@@ -1,8 +1,8 @@
 package com.kakaopay.hkp.lgs.api.financialsupport.service;
 
 import com.kakaopay.hkp.lgs.DefaultTest;
-import com.kakaopay.hkp.lgs.api.financialsupport.controller.FinancialSupportController;
 import com.kakaopay.hkp.lgs.api.financialsupport.domain.dto.request.RegionDto;
+import com.kakaopay.hkp.lgs.api.financialsupport.domain.dto.response.FinancialSupportDto;
 import com.kakaopay.hkp.lgs.api.financialsupport.domain.entity.FinancialSupport;
 import com.kakaopay.hkp.lgs.api.financialsupport.repository.FinancialSupportRepository;
 import org.assertj.core.api.Assertions;
@@ -13,13 +13,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.handler;
 
 @SpringBootTest
 public class FinancialSupportServiceTest extends DefaultTest {
@@ -54,10 +50,9 @@ public class FinancialSupportServiceTest extends DefaultTest {
     @Test
     public void findFinancialSupportByRegionDtoTest() {
 
-        RegionDto regionDto = new RegionDto(testRegion);
-
         //given
-        given(financialSupportService.findFinancialSupportByRegionDto(regionDto)).willReturn(getDefaultTestFinancialSupport());
+        RegionDto regionDto = new RegionDto(testRegion);
+        given(financialSupportRepository.findFinancialSupportByRegionName(testRegion)).willReturn(getDefaultTestFinancialSupport());
 
         //when
         FinancialSupport searched = financialSupportService.findFinancialSupportByRegionDto(regionDto);

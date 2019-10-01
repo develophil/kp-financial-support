@@ -17,6 +17,7 @@ import java.util.List;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -88,21 +89,28 @@ public class FinancialSupportControllerTest extends DefaultTest {
                 .andReturn();
 
     }
-//
-//    @Test
-//    public void 지자체정보_정상_수정_테스트() throws Exception {
-//
-//        //given
-////        given().willReturn();
-//
-//        //when
-//        mvc.perform(post("/api/financial-supports/file/load-support-data")).andDo(print())
-//
-//        //then
-//        .andExpect(status().isOk())
-//        .andExpect(jsonPath("$.successCount").value(successCountDto.getSuccessCount()))
-//        .andExpect(handler().handlerType(FinancialSupportFileController.class))
-//        .andExpect(handler().methodName("modifyFinancialSupport"))
-//        .andReturn();
-//    }
+
+    @Test
+    public void 지자체정보_정상_수정_테스트() throws Exception {
+
+        String modifiedRegion = "변경지자체";
+
+        FinancialSupport original = getDefaultTestFinancialSupport();
+        FinancialSupportDto modifying = getTestFinancialSupportDtoWith(modifiedRegion);
+
+        FinancialSupport modified = getTestFinancialSupportWith(modifiedRegion);
+
+        //given
+        given(financialSupportService.modifyFinancialSupport(original, modifying)).willReturn(modified);
+
+        //when
+        mvc.perform(patch("/api/financial-supports/"+testId)).andDo(print())
+
+        //then
+        .andExpect(status().isCreated())
+        .andExpect(jsonPath("$.localGovernment.name").value(modifiedRegion))
+        .andExpect(handler().handlerType(FinancialSupportController.class))
+        .andExpect(handler().methodName("modifyFinancialSupport"))
+        .andReturn();
+    }
 }
