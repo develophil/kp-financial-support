@@ -2,7 +2,9 @@ package com.kakaopay.hkp.lgs;
 
 import com.kakaopay.hkp.lgs.api.financialsupport.domain.dto.response.FinancialSupportDto;
 import com.kakaopay.hkp.lgs.api.financialsupport.domain.entity.FinancialSupport;
+import com.kakaopay.hkp.lgs.api.financialsupport.domain.entity.InterestDifferenceSupportRatio;
 import com.kakaopay.hkp.lgs.api.financialsupport.domain.entity.LocalGovernment;
+import com.kakaopay.hkp.lgs.api.financialsupport.domain.entity.SupportLimit;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -34,19 +36,19 @@ public class DefaultTest {
 
     protected static FinancialSupport getTestFinancialSupportWith(String region) {
 
-        return getTestFinancialSupportWith(testId, testRegion);
+        return getTestFinancialSupportWith(testId, region);
     }
 
     protected static FinancialSupport getTestFinancialSupportWith(long id, String region) {
 
         return FinancialSupport.builder()
                 .id(id)
-                .interestDifferenceSupportRatio(testRate)
+                .interestDifferenceSupportRatio(new InterestDifferenceSupportRatio(testRate))
                 .localGovernment(new LocalGovernment(id, region))
                 .managementBranch(testMgmt)
                 .receptionBranch(testReception)
                 .referrelInstitute(testInstitute)
-                .supportLimitAmount(testLimit)
+                .supportLimit(new SupportLimit(testLimit))
                 .supportTarget(testTarget)
                 .usage(testUsage)
                 .build();

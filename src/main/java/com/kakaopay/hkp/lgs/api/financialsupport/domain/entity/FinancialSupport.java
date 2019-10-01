@@ -31,11 +31,11 @@ public class FinancialSupport extends AbstractAuditingEntity {
     @Column(name = "usage", length = 20)
     private String usage;
 
-    @Column(name = "support_limit", length = 20)
-    private String supportLimitAmount;
+    @Embedded
+    private SupportLimit supportLimit;
 
-    @Column(name = "support_rate", length = 20)
-    private String interestDifferenceSupportRatio;
+    @Embedded
+    private InterestDifferenceSupportRatio interestDifferenceSupportRatio;
 
     @Column(name = "institute", length = 100)
     private String referrelInstitute;
@@ -46,13 +46,28 @@ public class FinancialSupport extends AbstractAuditingEntity {
     @Column(name = "reception", length = 50)
     private String receptionBranch;
 
+    public String getInterestDifferenceSupportRatio() {
+        return interestDifferenceSupportRatio.toRateString();
+    }
+    public void setInterestDifferenceSupportRatio(String rate) {
+        this.interestDifferenceSupportRatio = new InterestDifferenceSupportRatio(rate);
+    }
+
+    public String getSupportLimit() {
+        return supportLimit.toLimitAmountString();
+    }
+
+    public void setSupportLimit(String limit) {
+        this.supportLimit = new SupportLimit(limit);
+    }
+
     @Builder
-    public FinancialSupport(Long id, LocalGovernment localGovernment, String supportTarget, String usage, String supportLimitAmount, String interestDifferenceSupportRatio, String referrelInstitute, String managementBranch, String receptionBranch) {
+    public FinancialSupport(Long id, LocalGovernment localGovernment, String supportTarget, String usage, SupportLimit supportLimit, InterestDifferenceSupportRatio interestDifferenceSupportRatio, String referrelInstitute, String managementBranch, String receptionBranch) {
         this.id = id;
         this.localGovernment = localGovernment;
         this.supportTarget = supportTarget;
         this.usage = usage;
-        this.supportLimitAmount = supportLimitAmount;
+        this.supportLimit = supportLimit;
         this.interestDifferenceSupportRatio = interestDifferenceSupportRatio;
         this.referrelInstitute = referrelInstitute;
         this.managementBranch = managementBranch;
@@ -65,11 +80,11 @@ public class FinancialSupport extends AbstractAuditingEntity {
 
         this.id = id;
         this.localGovernment = new LocalGovernment(id, bean.getRegion());
-        this.interestDifferenceSupportRatio = bean.getRate();
+        this.setSupportLimit(bean.getLimit());
+        this.setInterestDifferenceSupportRatio(bean.getRate());
         this.managementBranch = bean.getMgmt();
         this.receptionBranch = bean.getReception();
         this.referrelInstitute = bean.getInstitute();
-        this.supportLimitAmount = bean.getLimit();
         this.supportTarget = bean.getTarget();
         this.usage = bean.getUsage();
 
@@ -78,11 +93,11 @@ public class FinancialSupport extends AbstractAuditingEntity {
     public FinancialSupport modify(FinancialSupportDto modifying) {
 
         Optional.ofNullable(modifying.getRegion()).ifPresent((v) -> this.localGovernment = new LocalGovernment(id, v));
-        Optional.ofNullable(modifying.getRate()).ifPresent((v) -> this.interestDifferenceSupportRatio = v);
+        Optional.ofNullable(modifying.getRate()).ifPresent(this::setInterestDifferenceSupportRatio);
         Optional.ofNullable(modifying.getMgmt()).ifPresent((v) -> this.managementBranch = v);
         Optional.ofNullable(modifying.getReception()).ifPresent((v) -> this.receptionBranch = v);
         Optional.ofNullable(modifying.getInstitute()).ifPresent((v) -> this.referrelInstitute = v);
-        Optional.ofNullable(modifying.getLimit()).ifPresent((v) -> this.supportLimitAmount = v);
+        Optional.ofNullable(modifying.getLimit()).ifPresent(this::setSupportLimit);
         Optional.ofNullable(modifying.getTarget()).ifPresent((v) -> this.supportTarget = v);
         Optional.ofNullable(modifying.getUsage()).ifPresent((v) -> this.usage = v);
         this.updateDateTime = LocalDateTime.now();

@@ -19,7 +19,7 @@ public class FinancialSupportTest extends DefaultTest {
         assertThat(financialSupport.getLocalGovernment()).isEqualTo(getDefaultTestLocalGovernment());
         assertThat(financialSupport.getSupportTarget()).isEqualTo(testTarget);
         assertThat(financialSupport.getUsage()).isEqualTo(testUsage);
-        assertThat(financialSupport.getSupportLimitAmount()).isEqualTo(testLimit);
+        assertThat(financialSupport.getSupportLimit()).isEqualTo(testLimit);
         assertThat(financialSupport.getInterestDifferenceSupportRatio()).isEqualTo(testRate);
         assertThat(financialSupport.getReferrelInstitute()).isEqualTo(testInstitute);
         assertThat(financialSupport.getManagementBranch()).isEqualTo(testMgmt);

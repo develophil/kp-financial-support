@@ -27,7 +27,7 @@ public class FinancialSupportDto extends BaseModel {
                 .region(financialSupport.getLocalGovernment().getName())
                 .target(financialSupport.getSupportTarget())
                 .usage(financialSupport.getUsage())
-                .limit(financialSupport.getSupportLimitAmount())
+                .limit(financialSupport.getSupportLimit())
                 .rate(financialSupport.getInterestDifferenceSupportRatio())
                 .institute(financialSupport.getReferrelInstitute())
                 .mgmt(financialSupport.getManagementBranch())

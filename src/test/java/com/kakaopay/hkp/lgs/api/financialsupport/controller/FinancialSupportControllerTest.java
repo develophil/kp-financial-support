@@ -30,12 +30,10 @@ public class FinancialSupportControllerTest extends DefaultTest {
     @MockBean
     private FinancialSupportService financialSupportService;
 
-    private List<FinancialSupportDto> financialSupportDtoList;
     private List<FinancialSupport> financialSupportList;
 
     @Before
     public void setUp() throws Exception {
-        financialSupportDtoList = getDefaultTestFinancialSupportDtoList();
         financialSupportList = getDefaultTestFinancialSupportList();
     }
 
@@ -93,18 +91,18 @@ public class FinancialSupportControllerTest extends DefaultTest {
     @Test
     public void 지자체정보_정상_수정_테스트() throws Exception {
 
+        //given
         String modifiedRegion = "변경지자체";
-
         FinancialSupport original = getDefaultTestFinancialSupport();
         FinancialSupportDto modifying = getTestFinancialSupportDtoWith(modifiedRegion);
-
         FinancialSupport modified = getTestFinancialSupportWith(modifiedRegion);
-
-        //given
         given(financialSupportService.modifyFinancialSupport(original, modifying)).willReturn(modified);
 
         //when
-        mvc.perform(patch("/api/financial-supports/"+testId)).andDo(print())
+        mvc.perform(patch("/api/financial-supports/"+testId)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content("{\"region\":\"" + testRegion + "\"}")
+        ).andDo(print())
 
         //then
         .andExpect(status().isCreated())

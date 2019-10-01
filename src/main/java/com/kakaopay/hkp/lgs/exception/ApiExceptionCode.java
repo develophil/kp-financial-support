@@ -3,6 +3,7 @@ package com.kakaopay.hkp.lgs.exception;
 public enum ApiExceptionCode implements ExceptionCode {
 
     INVALID_PARAMETER("10000", "유효하지 않은 인자값입니다. [%s]"),
+    INVALID_VALUE("10010", "값이 유효하지 않습니다."),
 
     FAIL_READ_FILE("20000", "파일을 읽을 수가 없습니다. [%s]"),
     EMPTY_FILE("20010", "파일이 비어있습니다."),

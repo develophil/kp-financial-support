@@ -10,7 +10,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -70,8 +69,8 @@ public class FinancialSupportRepositoryTest extends DefaultTest {
 
         //given
         String modifiedRegion = "변경지자체";
-        String modifiedRate = "변경rate";
-        String modifiedLimit = "변경limit";
+        String modifiedRate = "1.11%~9.99%";
+        String modifiedLimit = "99억원 이내";
         FinancialSupport original = getDefaultTestFinancialSupport();
         FinancialSupportDto modifying = FinancialSupportDto.builder()
                 .region(modifiedRegion)
@@ -89,7 +88,7 @@ public class FinancialSupportRepositoryTest extends DefaultTest {
         //then
         Assertions.assertThat(modified.getId()).isEqualTo(original.getId());
         Assertions.assertThat(modified.getLocalGovernment().getName()).isEqualTo(modifiedRegion);
-        Assertions.assertThat(modified.getSupportLimitAmount()).isEqualTo(modifying.getLimit());
+        Assertions.assertThat(modified.getSupportLimit()).isEqualTo(modifying.getLimit());
         Assertions.assertThat(modified.getInterestDifferenceSupportRatio()).isEqualTo(modifying.getRate());
         Assertions.assertThat(modified.getSupportTarget()).isEqualTo(original.getSupportTarget());
         Assertions.assertThat(modified.getReferrelInstitute()).isEqualTo(original.getReferrelInstitute());
