@@ -1,10 +1,7 @@
 package com.kakaopay.hkp.lgs.api.financialsupport.domain.entity;
 
 import com.kakaopay.hkp.lgs.api.financialsupport.domain.helper.RateCompositor;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.apache.logging.log4j.util.Strings;
 
 import javax.persistence.Column;
@@ -14,6 +11,7 @@ import javax.persistence.Embeddable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Embeddable
 public class InterestDifferenceSupportRatio {
 

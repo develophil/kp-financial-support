@@ -4,6 +4,7 @@ import com.kakaopay.hkp.lgs.api.financialsupport.domain.helper.LocalGovernmentCo
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import java.io.Serializable;
 @Table(name = "local_government")
 @Getter
 @NoArgsConstructor
+@ToString
 @EqualsAndHashCode(of = {"code"})
 public class LocalGovernment implements Serializable {
 

@@ -11,4 +11,5 @@ public interface FinancialSupportRepository extends JpaRepository<FinancialSuppo
 
     @Query("select FS from FinancialSupport FS where FS.localGovernment.name = :region")
     FinancialSupport findFinancialSupportByRegionName(@Param("region") String region);
+
 }
