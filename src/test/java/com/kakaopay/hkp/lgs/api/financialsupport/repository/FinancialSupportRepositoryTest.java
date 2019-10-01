@@ -7,6 +7,10 @@ import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
@@ -96,5 +100,30 @@ public class FinancialSupportRepositoryTest extends DefaultTest {
         Assertions.assertThat(modified.getManagementBranch()).isEqualTo(original.getManagementBranch());
         Assertions.assertThat(modified.getUsage()).isEqualTo(original.getUsage());
         Assertions.assertThat(modified.getUpdateDateTime()).isNotEqualTo(original.getUpdateDateTime());
+    }
+
+    @Test
+    public void 지원한도컬럼에서_지원금액으로_내림차순정렬_후_특정_개수만큼_출력_테스트() {
+
+        long id = 7777L;
+        long id2 = 8888L;
+
+        String name = "test1";
+        String name2 = "test2";
+
+        FinancialSupport testFinancialSupport1 = getTestFinancialSupportWith(id, name);
+        FinancialSupport testFinancialSupport2 = getTestFinancialSupportWith(id2, name2);
+
+        testFinancialSupport1.setSupportLimit("2억원 이내");
+        testFinancialSupport2.setSupportLimit("10억원 이내");
+
+        financialSupportRepository.save(testFinancialSupport1);
+        financialSupportRepository.save(testFinancialSupport2);
+
+        Pageable pageable = PageRequest.of(0,4, Sort.by(Sort.Order.desc("supportLimit.supportLimitExponent"), Sort.Order.asc("interestDifferenceSupportRatio.interestDifferenceSupportToRatio")));
+
+        Page<FinancialSupport> result = financialSupportRepository.findAll(pageable);
+
+        Assertions.assertThat(result.getSize()).isEqualTo(2);
     }
 }
