@@ -1,53 +1,29 @@
 package com.kakaopay.hkp.lgs.api.financialsupport.domain.entity;
 
-import com.kakaopay.hkp.lgs.api.financialsupport.domain.helper.LocalGovernmentCodeGenerator;
-import com.kakaopay.hkp.lgs.exception.ApiException;
+import com.kakaopay.hkp.lgs.DefaultTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @RunWith(SpringRunner.class)
-public class FinancialSupportTest {
+public class FinancialSupportTest extends DefaultTest {
 
     @Test
     public void builderTest() {
 
-        long id = 9010L;
+        FinancialSupport financialSupport = getDefaultTestFinancialSupport();
 
-        LocalGovernment localGovernment = new LocalGovernment(id, "광양시");
-
-        String target = "광명시 소재 중소기업으로서 광명시장이 추천한 자";
-        String usage = "운전";
-        String limit = "3억원 이내";
-        String rate = "2.00%";
-        String institute = "광명시";
-        String mgmt = "광명지점";
-        String reception = "전 영업점";
-
-        FinancialSupport financialSupport = FinancialSupport.builder()
-                .id(id)
-                .interestDifferenceSupportRatio(rate)
-                .localGovernment(localGovernment)
-                .managementBranch(mgmt)
-                .receptionBranch(reception)
-                .referrelInstitute(institute)
-                .supportLimitAmount(limit)
-                .supportTarget(target)
-                .usage(usage)
-                .build();
-
-        assertThat(financialSupport.getId()).isEqualTo(id);
-        assertThat(financialSupport.getLocalGovernment()).isEqualTo(localGovernment);
-        assertThat(financialSupport.getSupportTarget()).isEqualTo(target);
-        assertThat(financialSupport.getUsage()).isEqualTo(usage);
-        assertThat(financialSupport.getSupportLimitAmount()).isEqualTo(limit);
-        assertThat(financialSupport.getInterestDifferenceSupportRatio()).isEqualTo(rate);
-        assertThat(financialSupport.getReferrelInstitute()).isEqualTo(institute);
-        assertThat(financialSupport.getManagementBranch()).isEqualTo(mgmt);
-        assertThat(financialSupport.getReceptionBranch()).isEqualTo(reception);
+        assertThat(financialSupport.getId()).isEqualTo(testId);
+        assertThat(financialSupport.getLocalGovernment()).isEqualTo(getDefaultTestLocalGovernment());
+        assertThat(financialSupport.getSupportTarget()).isEqualTo(testTarget);
+        assertThat(financialSupport.getUsage()).isEqualTo(testUsage);
+        assertThat(financialSupport.getSupportLimitAmount()).isEqualTo(testLimit);
+        assertThat(financialSupport.getInterestDifferenceSupportRatio()).isEqualTo(testRate);
+        assertThat(financialSupport.getReferrelInstitute()).isEqualTo(testInstitute);
+        assertThat(financialSupport.getManagementBranch()).isEqualTo(testMgmt);
+        assertThat(financialSupport.getReceptionBranch()).isEqualTo(testReception);
     }
 
     @Test
