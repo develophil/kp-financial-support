@@ -1,0 +1,22 @@
+package com.kakaopay.hkp.lgs.api.financialsupport.service;
+
+import com.kakaopay.hkp.lgs.api.financialsupport.domain.entity.FinancialSupport;
+import com.kakaopay.hkp.lgs.api.financialsupport.repository.FinancialSupportRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class FinancialSupportService {
+
+    private final FinancialSupportRepository financialSupportRepository;
+
+    public FinancialSupportService(FinancialSupportRepository financialSupportRepository) {
+        this.financialSupportRepository = financialSupportRepository;
+    }
+
+    public List<FinancialSupport> findAllFinancialSupportList() {
+        return financialSupportRepository.findAll();
+    }
+
+}

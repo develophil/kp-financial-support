@@ -24,11 +24,11 @@ public abstract class AbstractAuditingEntity implements Serializable {
     @CreatedDate
     @Column(name = "create_dt", nullable = false)
     @JsonIgnore
-    protected LocalDateTime createDateTime;
+    protected LocalDateTime createDateTime = LocalDateTime.now();
 
     @LastModifiedDate
     @Column(name = "update_dt")
     @JsonIgnore
-    protected LocalDateTime updateDateTime;
+    protected LocalDateTime updateDateTime = LocalDateTime.now();
 
 }
