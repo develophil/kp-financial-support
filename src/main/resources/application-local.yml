@@ -2,6 +2,7 @@ logging:
   level:
     ROOT: DEBUG
     com.kakaopay.hkp: DEBUG
+    org.hibernate.type.descriptor.sql: trace
 
 server:
   port: 8080
