@@ -36,10 +36,11 @@ IntelliJ가 평소에는 잘 작동하기는 하지만 가끔가다 Gradle이 �
     * 도메인 클래스 컨버터, 페이징, 정렬 사용가능
 * [x] embeddble sort
     * 객체변수.멤버변수로 접근하니까 됨. Sort.Order.desc("supportLimit.supportLimitExponent")
-* [ ] csv 파싱 시 에러 발생
-```
-com.fasterxml.jackson.databind.exc.MismatchedInputException: Cannot construct instance of `com.kakaopay.hkp.lgs.api.financialsupport.domain.dto.FinancialSupportCsv` (although at least one Creator exists): no String-argument constructor/factory method to deserialize from String value ('1')
-```
+* [x] csv 파싱 시 에러
+    > ```
+    > com.fasterxml.jackson.databind.exc.MismatchedInputException: Cannot construct instance of `com.kakaopay.hkp.lgs.api.financialsupport.domain.dto.FinancialSupportCsv` (although at least one Creator exists): no String-argument constructor/factory method to deserialize from String value ('1')
+    > ```
+    * intelliJ 환경에서만 발생. 터미널에서 실행 시 정상 작동. 
   
 
 ### 빌드 및 실행 방법
