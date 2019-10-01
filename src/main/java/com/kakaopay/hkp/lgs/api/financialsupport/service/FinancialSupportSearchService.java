@@ -24,15 +24,19 @@ public class FinancialSupportSearchService {
 
     public Set<String> findHigherLimitByPaging(Pageable pageable) {
 
-        Page<FinancialSupport> list = financialSupportRepository.findAll(
-                PageRequest.of(0,
-                        pageable.getPageSize(),
-                        Sort.by(
-                                Sort.Order.desc("supportLimit.supportLimitExponent"),
-                                Sort.Order.asc("interestDifferenceSupportRatio.interestDifferenceSupportToRatio"))));
+        Page<FinancialSupport> list = financialSupportRepository.findAll(pageable);
 
-
-        return list.stream().map(FinancialSupport::getReferrelInstitute).collect(Collectors.toSet());
+        return list.getContent().stream().map(FinancialSupport::getReferrelInstitute).collect(Collectors.toSet());
     }
 
+    public String findInstituteLeastRate() {
+
+        PageRequest pageable = PageRequest.of(0,
+                1,
+                Sort.by(Sort.Order.asc("interestDifferenceSupportRatio.interestDifferenceSupportToRatio")));
+
+        Page<FinancialSupport> list = financialSupportRepository.findAll(pageable);
+
+        return list.getContent().stream().map(FinancialSupport::getReferrelInstitute).findFirst().get();
+    }
 }

@@ -41,9 +41,8 @@ public class FinancialSupportSearchControllerTest extends DefaultTest {
     @Test
     public void findHigherLimitByPagingTest() throws Exception {
 
-        Pageable pageable = PageRequest.of(0,4, Sort.by(Sort.Order.desc("supportLimit.supportLimitExponent"), Sort.Order.asc("interestDifferenceSupportRatio.interestDifferenceSupportToRatio")));
-
         //given
+        Pageable pageable = PageRequest.of(0,4, Sort.by(Sort.Order.desc("supportLimit.supportLimitExponent"), Sort.Order.asc("interestDifferenceSupportRatio.interestDifferenceSupportToRatio")));
         given(financialSupportSearchService.findHigherLimitByPaging(pageable)).willReturn(result);
 
         //when
@@ -59,5 +58,22 @@ public class FinancialSupportSearchControllerTest extends DefaultTest {
         .andExpect(handler().methodName("findHigherLimitByPaging"))
         .andReturn();
 
+    }
+
+    @Test
+    public void findInstituteLeastRateTest() throws Exception {
+
+        //given
+        given(financialSupportSearchService.findInstituteLeastRate()).willReturn(testInstitute);
+
+        //when
+        mvc.perform(get("/api/financial-supports/search/institute/least-rate")).andDo(print())
+
+        //then
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.suggestInstitute").value(testInstitute))
+        .andExpect(handler().handlerType(FinancialSupportSearchController.class))
+        .andExpect(handler().methodName("findInstituteLeastRate"))
+        .andReturn();
     }
 }

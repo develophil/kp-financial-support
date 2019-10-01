@@ -1,7 +1,6 @@
 package com.kakaopay.hkp.lgs.api.financialsupport.controller;
 
 import com.kakaopay.hkp.lgs.api.financialsupport.domain.dto.request.PageDto;
-import com.kakaopay.hkp.lgs.api.financialsupport.domain.dto.request.RegionDto;
 import com.kakaopay.hkp.lgs.api.financialsupport.domain.dto.response.SuggestInstituteDto;
 import com.kakaopay.hkp.lgs.api.financialsupport.service.FinancialSupportSearchService;
 import com.kakaopay.hkp.lgs.base.controller.BaseApiController;
@@ -9,7 +8,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,16 +42,10 @@ public class FinancialSupportSearchController extends BaseApiController {
 
         return financialSupportSearchService.findHigherLimitByPaging(pageable);
     }
-/*
 
     @ApiOperation(value = "이차보전 컬럼에서 보전 비율이 가장 작은 추천 기관명을 출력하는 API")
     @GetMapping("/institute/least-rate")
-    public SuggestInstituteDto findInstituteLeastRate(
-            @ApiParam(name = "requestBankSupport", value = "지자체명 검색정보", required = true)
-            @RequestBody RegionDto regionDto) {
+    public SuggestInstituteDto findInstituteLeastRate() {
         return new SuggestInstituteDto(financialSupportSearchService.findInstituteLeastRate());
     }
-*/
-
-
 }
