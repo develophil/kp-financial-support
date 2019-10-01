@@ -22,7 +22,7 @@ public enum ApiExceptionCode implements ExceptionCode {
         return this.code;
     }
 
-    @Override public String getMessage(String... args) {
+    @Override public String getMessage(Object... args) {
         return String.format(this.message, args);
     }
 }
