@@ -1,0 +1,40 @@
+logging:
+  level:
+    ROOT: DEBUG
+    com.kakaopay.hkp: DEBUG
+    org.hibernate.type.descriptor.sql: trace
+
+server:
+  port: 8080
+
+spring:
+
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:h2:mem:lgs;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: hkp
+    password:
+    hikari:
+      poolName: Hikari
+      auto-commit: false
+  jpa:
+    database: H2
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+      use-new-id-generator-mappings: true
+    properties:
+      hibernate:
+        generate_statistics: true
+        format_sql: true
+        jdbc.batch_size: 20
+        order_inserts: true
+  h2:
+    console:
+      enabled: true
+      path : /h2-console
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      log-condition-evaluation-delta: false
