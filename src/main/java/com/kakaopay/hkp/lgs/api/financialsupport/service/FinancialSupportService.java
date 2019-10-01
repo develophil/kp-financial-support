@@ -1,5 +1,6 @@
 package com.kakaopay.hkp.lgs.api.financialsupport.service;
 
+import com.kakaopay.hkp.lgs.api.financialsupport.domain.dto.request.RegionDto;
 import com.kakaopay.hkp.lgs.api.financialsupport.domain.entity.FinancialSupport;
 import com.kakaopay.hkp.lgs.api.financialsupport.repository.FinancialSupportRepository;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,10 @@ public class FinancialSupportService {
 
     public List<FinancialSupport> findAllFinancialSupportList() {
         return financialSupportRepository.findAll();
+    }
+
+    public FinancialSupport findFinancialSupportByRegionDto(RegionDto dto) {
+        return financialSupportRepository.findFinancialSupportByRegionName(dto.getRegion());
     }
 
 }

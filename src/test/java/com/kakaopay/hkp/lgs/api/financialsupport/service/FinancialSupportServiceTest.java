@@ -2,6 +2,7 @@ package com.kakaopay.hkp.lgs.api.financialsupport.service;
 
 import com.kakaopay.hkp.lgs.DefaultTest;
 import com.kakaopay.hkp.lgs.api.financialsupport.controller.FinancialSupportController;
+import com.kakaopay.hkp.lgs.api.financialsupport.domain.dto.request.RegionDto;
 import com.kakaopay.hkp.lgs.api.financialsupport.domain.entity.FinancialSupport;
 import com.kakaopay.hkp.lgs.api.financialsupport.repository.FinancialSupportRepository;
 import org.assertj.core.api.Assertions;
@@ -48,5 +49,22 @@ public class FinancialSupportServiceTest extends DefaultTest {
         //then
         Assertions.assertThat(list.size()).isEqualTo(financialSupportList.size());
         Assertions.assertThat(list.get(0).getLocalGovernment().getName()).isEqualTo(financialSupportList.get(0).getLocalGovernment().getName());
+    }
+
+    @Test
+    public void findFinancialSupportByRegionDtoTest() {
+
+        RegionDto regionDto = new RegionDto(testRegion);
+
+        //given
+        given(financialSupportService.findFinancialSupportByRegionDto(regionDto)).willReturn(getDefaultTestFinancialSupport());
+
+        //when
+        FinancialSupport searched = financialSupportService.findFinancialSupportByRegionDto(regionDto);
+
+        //then
+        Assertions.assertThat(searched.getId()).isEqualTo(testId);
+        Assertions.assertThat(searched.getLocalGovernment().getName()).isEqualTo(testRegion);
+
     }
 }

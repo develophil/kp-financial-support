@@ -1,11 +1,14 @@
 package com.kakaopay.hkp.lgs.api.financialsupport.controller;
 
+import com.kakaopay.hkp.lgs.api.financialsupport.domain.dto.request.RegionDto;
 import com.kakaopay.hkp.lgs.api.financialsupport.domain.dto.response.FinancialSupportDto;
 import com.kakaopay.hkp.lgs.api.financialsupport.service.FinancialSupportService;
 import com.kakaopay.hkp.lgs.base.controller.BaseApiController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,4 +34,19 @@ public class FinancialSupportController extends BaseApiController {
                 .collect(Collectors.toList());
     }
 
+    @ApiOperation(value = "지원하는 지자체명을 입력 받아 해당 지자체의 지원정보를 출력하는 API")
+    @GetMapping("/by/region")
+    public FinancialSupportDto findFinancialSupportByRegion(
+            @ApiParam(name = "region", value = "검색할 지자체 명", required = true)
+            @RequestBody RegionDto regionDto) {
+        return FinancialSupportDto.from(financialSupportService.findFinancialSupportByRegionDto(regionDto));
+    }
+/*
+    @ApiOperation(value = "지원하는 지자체 정보 수정 기능 API")
+    @PatchMapping("/{id}")
+    public FinancialSupportDto modifyFinancialSupport(
+            @PathVariable("id") FinancialSupport financialSupport,
+            @RequestBody FinancialSupportDto financialSupportDto) {
+        return new ResponseEntity<FinancialSupportDto>(financialSupportService.modifyFinancialSupport(financialSupport, financialSupportDto), HttpStatus.CREATED);
+    }*/
 }

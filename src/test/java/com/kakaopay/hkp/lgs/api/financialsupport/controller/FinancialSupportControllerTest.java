@@ -1,6 +1,7 @@
 package com.kakaopay.hkp.lgs.api.financialsupport.controller;
 
 import com.kakaopay.hkp.lgs.DefaultTest;
+import com.kakaopay.hkp.lgs.api.financialsupport.domain.dto.request.RegionDto;
 import com.kakaopay.hkp.lgs.api.financialsupport.domain.dto.response.FinancialSupportDto;
 import com.kakaopay.hkp.lgs.api.financialsupport.domain.entity.FinancialSupport;
 import com.kakaopay.hkp.lgs.api.financialsupport.service.FinancialSupportService;
@@ -9,6 +10,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -54,4 +56,53 @@ public class FinancialSupportControllerTest extends DefaultTest {
         .andReturn();
 
     }
+
+
+    @Test
+    public void 지자체명으로_지원정보_조회_호출_테스트() throws Exception {
+
+        RegionDto regionDto = new RegionDto(testRegion);
+
+        //given
+        given(financialSupportService.findFinancialSupportByRegionDto(regionDto)).willReturn(getDefaultTestFinancialSupport());
+
+        //when
+        mvc.perform(
+                get("/api/financial-supports/by/region")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content("{\"region\":\"" + testRegion + "\"}")
+        ).andDo(print())
+
+                //then
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.region").value(testRegion))
+                .andExpect(jsonPath("$.target").exists())
+                .andExpect(jsonPath("$.usage").exists())
+                .andExpect(jsonPath("$.limit").exists())
+                .andExpect(jsonPath("$.rate").exists())
+                .andExpect(jsonPath("$.institute").exists())
+                .andExpect(jsonPath("$.mgmt").exists())
+                .andExpect(jsonPath("$.reception").exists())
+                .andExpect(handler().handlerType(FinancialSupportController.class))
+                .andExpect(handler().methodName("findFinancialSupportByRegion"))
+                .andReturn();
+
+    }
+//
+//    @Test
+//    public void 지자체정보_정상_수정_테스트() throws Exception {
+//
+//        //given
+////        given().willReturn();
+//
+//        //when
+//        mvc.perform(post("/api/financial-supports/file/load-support-data")).andDo(print())
+//
+//        //then
+//        .andExpect(status().isOk())
+//        .andExpect(jsonPath("$.successCount").value(successCountDto.getSuccessCount()))
+//        .andExpect(handler().handlerType(FinancialSupportFileController.class))
+//        .andExpect(handler().methodName("modifyFinancialSupport"))
+//        .andReturn();
+//    }
 }

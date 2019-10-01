@@ -50,4 +50,14 @@ public class FinancialSupportRepositoryTest extends DefaultTest {
         assertThat(financialSupportList.get(0).getLocalGovernment().getName()).isEqualTo(name);
 
     }
+
+    @Test
+    public void findFinancialSupportByRegionNameTest() {
+
+        FinancialSupport insertedFinancialSupport = financialSupportRepository.save(getDefaultTestFinancialSupport());
+        FinancialSupport searchFinancialSupport = financialSupportRepository.findFinancialSupportByRegionName(insertedFinancialSupport.getLocalGovernment().getName());
+
+        assertThat(searchFinancialSupport).isEqualTo(insertedFinancialSupport);
+
+    }
 }
