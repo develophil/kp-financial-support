@@ -37,6 +37,7 @@ public class FinancialSupportSearchController extends BaseApiController {
         PageRequest pageable = PageRequest.of(0,
                 pageDto.getSize(),
                 Sort.by(
+                        Sort.Order.desc("supportLimit.supportLimitDigits"),
                         Sort.Order.desc("supportLimit.supportLimitExponent"),
                         Sort.Order.asc("interestDifferenceSupportRatio.interestDifferenceSupportToRatio")));
 

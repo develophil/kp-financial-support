@@ -107,23 +107,34 @@ public class FinancialSupportRepositoryTest extends DefaultTest {
 
         long id = 7777L;
         long id2 = 8888L;
+        long id3 = 9999L;
 
         String name = "test1";
         String name2 = "test2";
+        String name3 = "test3";
 
         FinancialSupport testFinancialSupport1 = getTestFinancialSupportWith(id, name);
         FinancialSupport testFinancialSupport2 = getTestFinancialSupportWith(id2, name2);
+        FinancialSupport testFinancialSupport3 = getTestFinancialSupportWith(id3, name3);
 
         testFinancialSupport1.setSupportLimit("2억원 이내");
         testFinancialSupport2.setSupportLimit("10억원 이내");
+        testFinancialSupport3.setSupportLimit("50백만원 이내");
 
         financialSupportRepository.save(testFinancialSupport1);
         financialSupportRepository.save(testFinancialSupport2);
+        financialSupportRepository.save(testFinancialSupport3);
 
-        Pageable pageable = PageRequest.of(0,4, Sort.by(Sort.Order.desc("supportLimit.supportLimitExponent"), Sort.Order.asc("interestDifferenceSupportRatio.interestDifferenceSupportToRatio")));
+        Pageable pageable = PageRequest.of(0,2,
+                Sort.by(
+                        Sort.Order.desc("supportLimit.supportLimitDigits"),
+                        Sort.Order.desc("supportLimit.supportLimitExponent"),
+                        Sort.Order.asc("interestDifferenceSupportRatio.interestDifferenceSupportToRatio")));
 
         Page<FinancialSupport> result = financialSupportRepository.findAll(pageable);
 
-        Assertions.assertThat(result.getSize()).isEqualTo(2);
+        Assertions.assertThat(result.getTotalElements()).isEqualTo(3);
+        Assertions.assertThat(result.getContent().get(0).getId()).isEqualTo(id2);
+        Assertions.assertThat(result.getContent().get(1).getId()).isEqualTo(id);
     }
 }
