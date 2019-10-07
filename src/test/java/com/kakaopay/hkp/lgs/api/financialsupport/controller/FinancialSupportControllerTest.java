@@ -4,24 +4,28 @@ import com.kakaopay.hkp.lgs.DefaultTest;
 import com.kakaopay.hkp.lgs.api.financialsupport.domain.dto.request.RegionDto;
 import com.kakaopay.hkp.lgs.api.financialsupport.domain.dto.response.FinancialSupportDto;
 import com.kakaopay.hkp.lgs.api.financialsupport.domain.entity.FinancialSupport;
+import com.kakaopay.hkp.lgs.api.financialsupport.repository.FinancialSupportRepository;
 import com.kakaopay.hkp.lgs.api.financialsupport.service.FinancialSupportService;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(FinancialSupportController.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 public class FinancialSupportControllerTest extends DefaultTest {
 
     @Autowired
@@ -31,6 +35,10 @@ public class FinancialSupportControllerTest extends DefaultTest {
     private FinancialSupportService financialSupportService;
 
     private List<FinancialSupport> financialSupportList;
+
+
+    @Autowired
+    FinancialSupportRepository financialSupportRepository;
 
     @Before
     public void setUp() throws Exception {
@@ -94,9 +102,10 @@ public class FinancialSupportControllerTest extends DefaultTest {
         //given
         String modifiedRegion = "변경지자체";
         FinancialSupport original = getDefaultTestFinancialSupport();
-        FinancialSupportDto modifying = getTestFinancialSupportDtoWith(modifiedRegion);
+        financialSupportRepository.save(original);
+
         FinancialSupport modified = getTestFinancialSupportWith(modifiedRegion);
-        given(financialSupportService.modifyFinancialSupport(original, modifying)).willReturn(modified);
+        given(financialSupportService.modifyFinancialSupport(any(FinancialSupport.class), any(FinancialSupportDto.class))).willReturn(modified);
 
         //when
         mvc.perform(patch("/api/financial-supports/"+testId)
@@ -106,7 +115,7 @@ public class FinancialSupportControllerTest extends DefaultTest {
 
         //then
         .andExpect(status().isCreated())
-        .andExpect(jsonPath("$.localGovernment.name").value(modifiedRegion))
+        .andExpect(jsonPath("$.region").value(modifiedRegion))
         .andExpect(handler().handlerType(FinancialSupportController.class))
         .andExpect(handler().methodName("modifyFinancialSupport"))
         .andReturn();
