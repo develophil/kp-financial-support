@@ -1,16 +1,17 @@
 package com.kakaopay.hkp.lgs.api.financialsupport.controller;
 
+import com.kakaopay.hkp.lgs.DefaultTest;
 import com.kakaopay.hkp.lgs.api.financialsupport.domain.dto.response.SuccessCountDto;
 import com.kakaopay.hkp.lgs.api.financialsupport.service.FinanceSupportFileService;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -21,9 +22,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
-@WebMvcTest(FinancialSupportFileController.class)
-public class FinancialSupportFileControllerTest {
+@SpringBootTest
+@AutoConfigureMockMvc
+public class FinancialSupportFileControllerTest extends DefaultTest {
 
     @Autowired
     private MockMvc mvc;

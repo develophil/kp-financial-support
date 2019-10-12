@@ -1,16 +1,18 @@
 package com.kakaopay.hkp.lgs.api.financialsupport.controller;
 
-import com.kakaopay.hkp.lgs.DefaultTest;
+import com.kakaopay.hkp.lgs.api.financialsupport.DefaultFinancialSupportTest;
 import com.kakaopay.hkp.lgs.api.financialsupport.service.FinancialSupportSearchService;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
@@ -22,8 +24,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(FinancialSupportSearchController.class)
-public class FinancialSupportSearchControllerTest extends DefaultTest {
+@SpringBootTest
+@AutoConfigureMockMvc
+public class FinancialSupportSearchControllerTest extends DefaultFinancialSupportTest {
 
     @Autowired
     private MockMvc mvc;
