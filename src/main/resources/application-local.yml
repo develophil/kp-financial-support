@@ -38,3 +38,11 @@ spring:
       enabled: true
     restart:
       log-condition-evaluation-delta: false
+
+security:
+  authentication:
+    jwt:
+      # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
+      base64-secret: d15IejJFZAjrjvbx5jPQ68f8zim7oLWigluGXTdlGEmTdkCAjfhRv31g2V9V4FJrLcBIc2wP/iD206S5eCelGw==
+      # Token is valid 1 min
+      token-validity-in-seconds: 60
