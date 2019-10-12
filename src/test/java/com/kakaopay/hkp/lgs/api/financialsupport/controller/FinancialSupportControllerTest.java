@@ -47,6 +47,7 @@ public class FinancialSupportControllerTest extends DefaultFinancialSupportTest 
     }
 
     @Test
+    @WithMockUser
     public void 지원하는_모든_지자체목록_조회_호출_테스트() throws Exception {
 
         //given
@@ -67,6 +68,7 @@ public class FinancialSupportControllerTest extends DefaultFinancialSupportTest 
 
 
     @Test
+    @WithMockUser
     public void 지자체명으로_지원정보_조회_호출_테스트() throws Exception {
 
         RegionDto regionDto = new RegionDto(testRegion);
@@ -98,6 +100,7 @@ public class FinancialSupportControllerTest extends DefaultFinancialSupportTest 
     }
 
     @Test
+    @WithMockUser
     public void 지자체정보_정상_수정_테스트() throws Exception {
 
         //given

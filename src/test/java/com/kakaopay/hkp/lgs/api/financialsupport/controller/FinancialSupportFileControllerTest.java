@@ -44,6 +44,7 @@ public class FinancialSupportFileControllerTest extends DefaultTest {
     }
 
     @Test
+    @WithMockUser
     public void 지자체지원정보_저장된CSV_저장_테스트() throws Exception {
 
         //given
@@ -61,6 +62,7 @@ public class FinancialSupportFileControllerTest extends DefaultTest {
     }
 
     @Test
+    @WithMockUser
     public void 지자체지원정보_업로드된CSV_저장_테스트() throws Exception {
 
         //given

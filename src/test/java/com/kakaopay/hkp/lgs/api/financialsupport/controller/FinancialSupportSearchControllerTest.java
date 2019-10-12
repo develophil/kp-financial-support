@@ -42,6 +42,7 @@ public class FinancialSupportSearchControllerTest extends DefaultFinancialSuppor
     }
 
     @Test
+    @WithMockUser
     public void findHigherLimitByPagingTest() throws Exception {
 
         //given
@@ -64,6 +65,7 @@ public class FinancialSupportSearchControllerTest extends DefaultFinancialSuppor
     }
 
     @Test
+    @WithMockUser
     public void findInstituteLeastRateTest() throws Exception {
 
         //given
