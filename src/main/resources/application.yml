@@ -10,3 +10,20 @@ spring:
 
   resources:
     add-mappings: true
+
+url:
+  api:
+    account:
+      signup: /api/account/signup
+      signin: /api/account/signin
+      refresh: /api/account/refresh
+    financialSupport:
+      findAll: /api/financial-supports
+      findByRegion: /api/financial-supports/by/region
+      modify: /api/financial-supports/{id}
+
+      file:
+        load: /api/financial-supports/file/load-support-data
+      search:
+        higherLimit: /api/financial-supports/search/regions/higher-limit
+        instituteLeastRate: /api/financial-supports/search/institute/least-rate
