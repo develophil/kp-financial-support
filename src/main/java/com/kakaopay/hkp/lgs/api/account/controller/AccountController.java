@@ -58,7 +58,7 @@ public class AccountController extends BaseApiController {
 
     private HttpHeaders createAuthHeader(String jwt) {
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+        httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, JWTFilter.TOKEN_BEARER + jwt);
         return httpHeaders;
     }
 
