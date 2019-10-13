@@ -1,6 +1,6 @@
 package com.kakaopay.hkp.lgs.api.financialsupport.repository;
 
-import com.kakaopay.hkp.lgs.DefaultTest;
+import com.kakaopay.hkp.lgs.api.financialsupport.DefaultFinancialSupportTest;
 import com.kakaopay.hkp.lgs.api.financialsupport.domain.dto.response.FinancialSupportDto;
 import com.kakaopay.hkp.lgs.api.financialsupport.domain.entity.FinancialSupport;
 import org.assertj.core.api.Assertions;
@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest()
 @ActiveProfiles("local")
-public class FinancialSupportRepositoryTest extends DefaultTest {
+public class FinancialSupportRepositoryTest extends DefaultFinancialSupportTest {
 
     @Autowired
     FinancialSupportRepository financialSupportRepository;

@@ -1,14 +1,12 @@
 package com.kakaopay.hkp.lgs.api.financialsupport.domain.entity;
 
+import com.kakaopay.hkp.lgs.DefaultTest;
 import com.kakaopay.hkp.lgs.api.financialsupport.domain.helper.LocalGovernmentCodeGenerator;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
-public class LocalGovernmentTest {
+public class LocalGovernmentTest extends DefaultTest {
 
     private long testId = 5;
     private String testName = "testName";

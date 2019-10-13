@@ -1,8 +1,7 @@
 package com.kakaopay.hkp.lgs.api.financialsupport.service;
 
-import com.kakaopay.hkp.lgs.DefaultTest;
+import com.kakaopay.hkp.lgs.api.financialsupport.DefaultFinancialSupportTest;
 import com.kakaopay.hkp.lgs.api.financialsupport.domain.dto.request.RegionDto;
-import com.kakaopay.hkp.lgs.api.financialsupport.domain.dto.response.FinancialSupportDto;
 import com.kakaopay.hkp.lgs.api.financialsupport.domain.entity.FinancialSupport;
 import com.kakaopay.hkp.lgs.api.financialsupport.repository.FinancialSupportRepository;
 import org.assertj.core.api.Assertions;
@@ -13,12 +12,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.mockito.BDDMockito.given;
 
 @SpringBootTest
-public class FinancialSupportServiceTest extends DefaultTest {
+public class FinancialSupportServiceTest extends DefaultFinancialSupportTest {
 
     @Autowired
     FinancialSupportService financialSupportService;
