@@ -1,6 +1,6 @@
 package com.kakaopay.hkp.lgs.api.financialsupport.domain.entity;
 
-import com.kakaopay.hkp.lgs.DefaultTest;
+import com.kakaopay.hkp.lgs.api.financialsupport.DefaultFinancialSupportTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -8,7 +8,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
-public class FinancialSupportTest extends DefaultTest {
+public class FinancialSupportTest extends DefaultFinancialSupportTest {
 
     @Test
     public void builderTest() {
