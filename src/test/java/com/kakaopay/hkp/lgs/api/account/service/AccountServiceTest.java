@@ -2,8 +2,8 @@ package com.kakaopay.hkp.lgs.api.account.service;
 
 import com.kakaopay.hkp.lgs.api.account.DefaultAccountTest;
 import com.kakaopay.hkp.lgs.api.account.domain.dto.UserDto;
-import com.kakaopay.hkp.lgs.api.account.domain.entity.User;
 import com.kakaopay.hkp.lgs.api.account.repository.UserRepository;
+import com.kakaopay.hkp.lgs.security.jwt.JWTFilter;
 import com.kakaopay.hkp.lgs.security.jwt.TokenProvider;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
@@ -52,9 +52,8 @@ public class AccountServiceTest extends DefaultAccountTest {
     public void signUp_exist_user() {
 
         //given
-        userRepository.save(createDefaultTestUserWithAuthority());
-
-        UserDto userDto = createDefaultTestUserDto();
+        UserDto userDto = createTestUserDtoWithEncodedPw("signup_exist", testPassword);
+        saveTestUser(userDto);
 
         given(tokenProvider.createToken(any(UsernamePasswordAuthenticationToken.class))).willReturn(newToken);
 
@@ -68,10 +67,8 @@ public class AccountServiceTest extends DefaultAccountTest {
     public void signIn() {
 
         //given
-        UserDto userDto = createDefaultTestUserDto();
-        User user = createDefaultTestUserWithAuthority();
-
-        userRepository.save(user);
+        UserDto userDto = createTestUserDtoWithEncodedPw("signin", testPassword);
+        saveTestUser(userDto);
 
         given(tokenProvider.createToken(any(UsernamePasswordAuthenticationToken.class))).willReturn(newToken);
 
@@ -86,7 +83,7 @@ public class AccountServiceTest extends DefaultAccountTest {
     public void signIn_not_exist_user() {
 
         //given
-        UserDto userDto = createDefaultTestUserDto();
+        UserDto userDto = new UserDto("signin_not_exist", "notExist");
 
         //when
         String token = accountService.signIn(userDto);
@@ -98,13 +95,13 @@ public class AccountServiceTest extends DefaultAccountTest {
     public void signIn_invalid_auth() {
 
         //given
-        UserDto userDto = new UserDto(testUsername, "differentPassword");
-        User user = createDefaultTestUserWithAuthority();
-
-        userRepository.save(user);
+        String username = "signin_invalid";
+        UserDto validUserDto = new UserDto(username, "valid");
+        UserDto invalidUserDto = new UserDto(username, "invalid");
+        saveTestUser(validUserDto);
 
         //when
-        String token = accountService.signIn(userDto);
+        String token = accountService.signIn(invalidUserDto);
 
         //then
     }
@@ -113,13 +110,14 @@ public class AccountServiceTest extends DefaultAccountTest {
     public void refresh() {
 
         //given
+        String requestToken = JWTFilter.TOKEN_BEARER + originalToken;
         Authentication authentication = new UsernamePasswordAuthenticationToken(null, null, null);
 
         given(tokenProvider.getAuthentication(originalToken)).willReturn(authentication);
         given(tokenProvider.createToken(authentication)).willReturn(newToken);
 
         //when
-        String refreshToken = accountService.refresh(originalToken);
+        String refreshToken = accountService.refresh(requestToken);
 
         //then
         Assertions.assertThat(refreshToken).isEqualTo(newToken);
@@ -127,7 +125,7 @@ public class AccountServiceTest extends DefaultAccountTest {
 
     @Test
     public void splitToken() throws Exception {
-        String requestToken = "Bearer token";
+        String requestToken = JWTFilter.TOKEN_BEARER + "token";
         String token = accountService.splitToken(requestToken);
         Assertions.assertThat(token).isEqualTo("token");
     }
@@ -142,5 +140,9 @@ public class AccountServiceTest extends DefaultAccountTest {
     public void splitToken_empty() throws Exception {
         String requestToken = "";
         accountService.splitToken(requestToken);
+    }
+
+    private void saveTestUser(UserDto userDto) {
+        userRepository.save(createTestUserWithAuthority(userDto.getId(), userDto.getPw()));
     }
 }

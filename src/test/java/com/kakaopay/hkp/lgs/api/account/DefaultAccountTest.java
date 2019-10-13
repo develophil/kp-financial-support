@@ -23,11 +23,22 @@ public class DefaultAccountTest extends DefaultTest {
         return new UserDto(testUsername, testPassword);
     }
 
-    protected UserDto createDefaultTestUserWithEncodedPwDto(){
-        return new UserDto(testUsername, passwordEncoder.encode(testPassword));
+    protected UserDto createDefaultTestUserDtoWithEncodedPw(){
+        return createTestUserDtoWithEncodedPw(testUsername, testPassword);
+    }
+    protected UserDto createTestUserDtoWithEncodedPw(String username, String password){
+        return new UserDto(username, encode(password));
     }
 
     protected User createDefaultTestUserWithAuthority(){
-        return new User(createDefaultTestUserWithEncodedPwDto());
+        return new User(createDefaultTestUserDtoWithEncodedPw());
+    }
+
+    protected User createTestUserWithAuthority(String username, String password){
+        return new User(createTestUserDtoWithEncodedPw(username, password));
+    }
+
+    protected String encode(String password) {
+        return passwordEncoder.encode(password);
     }
 }

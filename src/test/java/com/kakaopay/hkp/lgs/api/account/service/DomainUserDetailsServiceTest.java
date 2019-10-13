@@ -36,7 +36,7 @@ public class DomainUserDetailsServiceTest extends DefaultAccountTest {
 
         //then
         Assertions.assertThat(userDetails.getUsername()).isEqualTo(testUsername);
-        Assertions.assertThat(userDetails.getPassword()).isEqualTo(testPassword);
+        Assertions.assertThat(userDetails.getPassword()).isNotEmpty();
         Assertions.assertThat(userDetails.getAuthorities().stream().findFirst().get().getAuthority()).isEqualTo(AuthorityName.ROLE_USER.name());
     }
 
